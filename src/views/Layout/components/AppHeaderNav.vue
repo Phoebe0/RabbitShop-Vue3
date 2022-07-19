@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import useStore from '../../../store'
+import useStore from '@/store'
 const { category } = useStore()
 category.getCateList()
 </script>
@@ -9,19 +9,19 @@ category.getCateList()
         <li v-for="item in category.cateList" :key="item.id">
           <RouterLink to="/">{{item.name}}</RouterLink>
           <div class="layer" v-if="item.id">
-          <ul>
-            <li v-for="subItem in item.children" :key="subItem.id">
-              <a href="#">
-                <img
-                  :src="subItem.picture"
-                  alt=""
-                />
-                <p>{{subItem.name}}</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-         <div class="layer" v-else>商品拼命加载中</div>
+            <ul>
+              <li v-for="subItem in item.children" :key="subItem.id">
+                <a href="#">
+                  <img
+                    :src="subItem.picture"
+                    alt=""
+                  />
+                  <p>{{subItem.name}}</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="layer" v-else>商品拼命加载中</div>
       </li>
       </ul>
 </template>
