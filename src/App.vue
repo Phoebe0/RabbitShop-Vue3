@@ -8,14 +8,7 @@ const test = async () => {
 test ()
 </script>
 <template>
-app
-<p>123</p>
-<ul>
-  <li>
-    111
-  </li>
-</ul>
-<a href="#">链接🔗</a>
+<RouterView></RouterView>
 </template>
 <style lang="less" scoped>
 
