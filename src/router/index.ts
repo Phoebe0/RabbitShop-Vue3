@@ -5,7 +5,11 @@ import {createRouter, createWebHistory} from 'vue-router'
 const router  = createRouter({
   history: createWebHistory(), // history模式
   routes: [
-    {path: '/', component: () => import('@/views/Layout/index.vue')},
+    {path: '/', component: () => import('@/views/Layout/index.vue'), children: [
+      {path: '', component: () => import('@/views/Home/index.vue')}, // 首页
+      {path: '/category/:id', component: () => import('@/views/category/index.vue')}, // 一级路由
+      {path: '/category/sub/:id', component: () => import('@/views/category/sub.vue')}, // 二级路由
+    ]},
     {path: '/login', component: () => import('@/views/Login/index.vue')}
   ]
 })

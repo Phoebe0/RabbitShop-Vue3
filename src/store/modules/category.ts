@@ -18,7 +18,18 @@ const useCateStore = defineStore('category',{
       const res = await request.get<ApiRes>('/home/category/head')
       console.log(res)
       this.cateList = res.data.result
-    } 
+    },
+    // 鼠标进入设置对应项的show值为true
+    show(id: string) {
+      // 拿着id找到对应项
+      const obj = this.cateList.find(item => item.id === id)
+      obj!.show = true
+    },
+    // 鼠标离开设置对应项的show为false
+    hide(id: string) {
+      const obj = this.cateList.find(item => item.id === id)
+      obj!.show = false
+    }
   }
 
 })

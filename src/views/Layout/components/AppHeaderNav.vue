@@ -1,23 +1,28 @@
 <script lang="ts" setup>
 import useStore from '@/store'
 const { category } = useStore()
-category.getCateList()
+
 </script>
 <template>
 <ul class="app-header-nav">
         <li class="home"><RouterLink to="/">首页</RouterLink></li>
-        <li v-for="item in category.cateList" :key="item.id">
-          <RouterLink to="/">{{item.name}}</RouterLink>
-          <div class="layer" v-if="item.id">
+        <li 
+        v-for="item in category.cateList" 
+        :key="item.name" 
+        @mouseenter="category.show(item.id)" 
+        @mouseleave="category.hide(item.id)"
+        @click="category.hide(item.id)"
+        >
+        <!-- 进入一级路由 -->
+          <RouterLink :to="item.id? `/category/${item.id}` : '/'">{{item.name}}</RouterLink>
+          <div class="layer" :class="{ show: item.show }" v-if="item.id">
             <ul>
               <li v-for="subItem in item.children" :key="subItem.id">
-                <a href="#">
-                  <img
-                    :src="subItem.picture"
-                    alt=""
-                  />
+              <!-- 进入二级路由 -->
+                <RouterLink :to="`/category/sub/${subItem.id}`">
+                  <img :src="subItem.picture"/>
                   <p>{{subItem.name}}</p>
-                </a>
+               </RouterLink>
               </li>
             </ul>
           </div>
@@ -52,10 +57,10 @@ category.getCateList()
         color: @xtxColor;
         border-bottom: 1px solid @xtxColor;
       }
-      > .layer {
-        height: 132px;
-        opacity: 1;
-      }
+      // > .layer {
+      //   // height: 132px;
+      //   // opacity: 1;
+      // }
     }
   }
 }
@@ -71,6 +76,15 @@ category.getCateList()
   opacity: 0;
   box-shadow: 0 0 5px #ccc;
   transition: all 0.2s 0.1s;
+  /* 
+    1. 准备一个类名，默认所有的layer是全部隐藏的
+    2. 给li绑定鼠标进入事件，动态给鼠标经过的li的layer 添加show类名
+    3. 给li绑定鼠标离开事件，动态的给鼠标离开的li的layer 移除show类名
+  */
+  &.show {
+    height: 132px;
+    opacity: 1;
+  }
   ul {
     display: flex;
     flex-wrap: wrap;
