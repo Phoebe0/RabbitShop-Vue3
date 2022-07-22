@@ -1,6 +1,6 @@
 <script lang="ts" setup name="XtxCarousel">
 
-import { ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 import { BannerItem } from  '@/types/data'
 // 方式一： vue3即使不用ts，也可以做类型，需要使用propType方法
 // defineProps({
@@ -50,7 +50,11 @@ const start = () => {
     }, duration)
   }
 }
-start()
+start ()
+// 组件销毁 ，清除定时器
+onUnmounted(() => {
+  stop ()
+})
 
 </script>
 
@@ -77,7 +81,7 @@ start()
       <i class="iconfont icon-angle-right"></i>
     </a>
     <!-- 小圆点 -->
-    <div class="carousel-indicator">
+    <div class="carousel-indicator" v-if="isShowDots">
       <span
       v-for="(item, index) in slidesList"
       :key="item.id"

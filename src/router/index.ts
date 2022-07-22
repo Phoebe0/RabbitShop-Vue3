@@ -10,7 +10,8 @@ const router  = createRouter({
       {path: '/category/:id', component: () => import('@/views/category/index.vue')}, // 一级路由
       {path: '/category/sub/:id', component: () => import('@/views/category/sub.vue')}, // 二级路由
     ]},
-    {path: '/login', component: () => import('@/views/Login/index.vue')}
+    {path: '/login', component: () => import('@/views/Login/index.vue')},
+    {path: '/test', component: () => import('@/views/testdemo/index.vue')}
   ]
 })
 // 3. 导出

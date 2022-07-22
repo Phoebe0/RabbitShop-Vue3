@@ -1,10 +1,10 @@
 // 商品
 export type GoodItem = {
   desc: string
-  discount: null
+  discount?: any
+  orderNum: number
   id: string
   name: string
-  orderNum: null
   picture: string
   price: string
 }
@@ -33,4 +33,12 @@ export interface BannerItem {
   imgUrl: string;
   hrefUrl: string;
   type: string;
+}
+
+// 人气推荐商品
+interface HotGoodItem {
+  id: string;
+  picture: string;
+  title: string;
+  alt: string;
 }
