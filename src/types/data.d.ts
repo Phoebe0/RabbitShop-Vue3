@@ -19,19 +19,15 @@ export type CategoryItem = {
   goods?: GoodItem[]
 }
 // 响应的结果
-export interface ApiRes {
+export interface ApiRes<T> {
   code: string
   msg: string
-  result: CategoryItem[]
+  result: T
 }
+
+
 
 // 轮播图数据
-export interface BannerRes {
-  code: string;
-  msg: string;
-  result: BannerItem[];
-}
-
 export interface BannerItem {
   id: string;
   imgUrl: string;

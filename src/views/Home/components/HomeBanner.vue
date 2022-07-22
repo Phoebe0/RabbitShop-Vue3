@@ -8,7 +8,7 @@ home.getSlideList()
   <div class="home-banner">
     <!-- 轮播图 -->
     <!-- 父传子的方式将数据传给通用轮播图组件 -->
-    <XtxCarousel :slides="home.slideList" autoPlay :duration="3000"></XtxCarousel>
+    <XtxCarousel :slidesList="home.slideList" autoPlay :duration="3000" isShowDots></XtxCarousel>
   </div>
   
 </template>
@@ -23,6 +23,8 @@ home.getSlideList()
   z-index: 98;
   background-color: pink;
 }
+
+// 将首页样式深度作用到组件内部，替换组件中的样式
 :deep(.carousel-btn.prev) {
   left: 270px!important;
 }

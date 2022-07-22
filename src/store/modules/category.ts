@@ -15,7 +15,7 @@ const useCateStore = defineStore('category',{
   actions: {
     // 获取导航链接数据的方法
     async getCateList() {
-      const res = await request.get<ApiRes>('/home/category/head')
+      const res = await request.get<ApiRes<CategoryItem[]>>('/home/category/head')
       console.log(res)
       this.cateList = res.data.result
     },

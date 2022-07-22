@@ -16,7 +16,9 @@ export default defineConfig({
       }
     }
   },
-  plugins: [vue(), vueSetupExtend()],
+  plugins: [ vueSetupExtend(), vue({
+    reactivityTransform: true // 数据响应式
+  })],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

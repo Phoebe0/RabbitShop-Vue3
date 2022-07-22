@@ -1,66 +1,67 @@
 <script lang="ts" setup name="XtxCarousel">
 
-import { onMounted, onUnmounted, PropType, ref } from 'vue'
+import { ref } from 'vue'
 import { BannerItem } from  '@/types/data'
-const props = defineProps({
-  slides: {
-    type: Array as PropType<BannerItem[]>,
-    default: []
-  },
-  autoPlay: {
-    type: Boolean,
-    default: false
-  },
-  duration: {
-    type:Number,
-    default: 3000
-  }
-})
+// 方式一： vue3即使不用ts，也可以做类型，需要使用propType方法
+// defineProps({
+//   slidesList: {
+//     type: Array as PropType<BannerItem[]>
+//   }
+// })
+// 方式二：ts方式
+const {slidesList, autoPlay, duration = 3000, isShowDots = false} = defineProps<{
+  slidesList: BannerItem[]
+  autoPlay?: boolean
+  duration: number
+  isShowDots?: boolean
+  }>()
+// 默认激活第一张图片 第一个小圆点
 const active = ref(0)
-
+// 为左右箭头绑定事件
+  // 上一张  active -- 
 const prev = () => {
-  if(active.value <= 0) {
-    active.value = props.slides.length - 1
+  active.value --
+  // 当<=0时，说明已经到了第一张，手动调到最后一张
+  if(active.value < 0) {
+    active.value = slidesList.length - 1
   }
 }
 const next = () => {
-  if (active.value >= props.slides.length - 1) {
+  active.value ++
+  if (active.value > slidesList.length - 1) {
     active.value = 0
-  } else {
-    active.value ++
   }
 }
 
-const play = () => {
-  // 如果没有自动播放
-  if (!props.autoPlay) return
-  // 在ts中，使用定时器，window.setInterval
-  timer = window.setInterval(() => {
-    next()
-  }, props.duration)
-}
+// 自动轮播 
+let timerId = -1
+// 鼠标进入关闭自动轮播
 const stop = () => {
-  clearInterval(timer)
+  clearInterval(timerId)
 }
+// 鼠标移开开启自动轮播
+const start = () => {
+  // 如果没传递autoplay,就不开启自动轮播
+  if(autoPlay){
+    stop()
+    // 在ts中，使用定d时器，window.setInterval
+    timerId = window.setInterval(() => {
+      next()
+    }, duration)
+  }
+}
+start()
 
-let timer = -1
-// 自动播放
-onMounted(() => {
-  play()
-})
-
-onUnmounted(() => {
-  stop()
-})
 </script>
 
 <template>
-  <div class="xtx-carousel" @mouseenter="stop" @mouseleave="play">
+  <div class="xtx-carousel" @mouseenter="stop" @mouseleave="start">
+    <!-- 轮播图片 -->
     <ul class="carousel-body">
       <li 
-      class="carousel-item fade"
+      class="carousel-item"
       :class="{ fade: active === index }"
-      v-for="(item, index) in slides"
+      v-for="(item, index) in slidesList"
       :key="item.id"
       >
         <RouterLink :to="item.hrefUrl">
@@ -68,16 +69,18 @@ onUnmounted(() => {
         </RouterLink>
       </li>
     </ul>
+    <!-- 左右箭头 -->
     <a href="javascript:;" class="carousel-btn prev" @click="prev">
       <i class="iconfont icon-angle-left"></i>
     </a>
     <a href="javascript:;" class="carousel-btn next" @click="next">
       <i class="iconfont icon-angle-right"></i>
     </a>
+    <!-- 小圆点 -->
     <div class="carousel-indicator">
-      <span 
-      v-for="(item, index) in slides"
-      :key="item.id" 
+      <span
+      v-for="(item, index) in slidesList"
+      :key="item.id"
       :class="{ active: active === index }"
       @mouseenter="active = index"
       ></span>
