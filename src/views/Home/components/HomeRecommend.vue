@@ -2,12 +2,13 @@
 import HomePanel from './HomePanel.vue'
 import useStore from '@/store'
 import { useLazyData } from '@/utils/hooks'
+import HomeSkeleton from './HomeSkeleton.vue'
 const { home } = useStore()
 const target = useLazyData(home.getRecommendGoodsList)
 </script>
 <template>
   <HomePanel ref="target" title="人气推荐" sub-title="人气爆款 不容错过">
-    <ul class="goods-list">
+    <ul class="goods-list" v-if="home.recommendGoodsList.length">
       <li v-for="item in home.recommendGoodsList" :key="item.id">
         <RouterLink to="/">
           <img v-lazy="item.picture" alt="" />
@@ -16,6 +17,7 @@ const target = useLazyData(home.getRecommendGoodsList)
         </RouterLink>
       </li>
     </ul>
+    <HomeSkeleton v-else></HomeSkeleton>
   </HomePanel>
 </template>
 
