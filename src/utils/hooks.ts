@@ -1,6 +1,7 @@
 // 自定义一些通用的compositions api
 import { useIntersectionObserver } from '@vueuse/core'
 import { ref } from 'vue'
+import { threadId } from 'worker_threads'
 
 // 封装通用的数据懒加载api
 export function useLazyData(apiFn: () => void) {
@@ -17,7 +18,11 @@ export function useLazyData(apiFn: () => void) {
         stop()
         apiFn()
       }
+    },
+    {
+      // threshold 这个属性是配置 何时去触发加载， 值是0-1之间的一个值，默认是0.3
+      threshold: 0 // 只要是目标元素进入可视区就发送请求，值越大，发送请求越晚/
     }
   )
-  return target
-}
+  return target // 就是空的ref对象，要和组件中的dom进行绑定
+} 
