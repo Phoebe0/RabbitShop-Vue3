@@ -25,8 +25,6 @@ export interface ApiRes<T> {
   result: T
 }
 
-
-
 // 轮播图数据
 export interface BannerItem {
   id: string;
@@ -92,4 +90,43 @@ export type Special = {
   collectNum: number
   viewNum: number
   replyNum: number
+}
+
+// 一级分类
+export type TopCategory = {
+  id: string
+  name: string
+  picture: string
+  children: CategoryItem[]
+}
+
+// 二级分类
+export type SaleProperty = {
+  id: string
+  name: string
+  properties: {
+    id: string
+    name: string
+  }[]
+}
+
+
+export type SubCategory = {
+  id: string
+  name: string
+  picture?: any
+  parentId: string
+  parentName: string
+  brands: {
+    id: string
+    name: string
+    nameEn: string
+    logo: string
+    picture: string
+    type?: any
+    desc: string
+    place: string
+  }[]
+  saleProperties: SaleProperty[]
+  goods: GoodsItem[]
 }

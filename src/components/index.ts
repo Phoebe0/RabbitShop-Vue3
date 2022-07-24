@@ -3,6 +3,8 @@
 import XtxSkeleton from '@/components/skeleton/index.vue'
 import XtxCarousel from '@/components/carousel/index.vue'
 import Xtxmore from '@/components/more/index.vue'
+import XtxBread from './bread/index.vue'
+import XtxBreadItem from './bread/item.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
 import { App } from 'vue'
@@ -14,6 +16,8 @@ export default {
     app.component(XtxSkeleton.name, XtxSkeleton)
     app.component(XtxCarousel.name, XtxCarousel)
     app.component(Xtxmore.name, Xtxmore)
+    app.component(XtxBread.name, XtxBread)
+    app.component(XtxBreadItem.name, XtxBreadItem)
     app.directive('lazy', {
       mounted(el, binding) {
         // binding.value  图片的地址

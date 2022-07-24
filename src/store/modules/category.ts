@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {CategoryItem, ApiRes} from '@/types/data'
+import {CategoryItem, ApiRes, TopCategory, SubCategory} from '@/types/data'
 import request from '@/utils/request'
 import {topCategory} from '@/store/constants'
 // 将默认的分类数据处理成数据包对象
@@ -9,7 +9,9 @@ const handleCategory = topCategory.map(item => {
 const useCateStore = defineStore('category',{
   state() {
     return {
-      cateList: handleCategory as CategoryItem[] // 导航链接的数据
+      cateList: handleCategory as CategoryItem[], // 导航链接的数据
+      topCategory: {} as TopCategory, // 一级商品分类的详细信息
+      subCategory: {} as SubCategory, // 二级商品分类的详细信息
     }
   },
   actions: {
@@ -29,6 +31,21 @@ const useCateStore = defineStore('category',{
     hide(id: string) {
       const obj = this.cateList.find(item => item.id === id)
       obj!.show = false
+    },
+    // 获取一级分类商品信息
+    async getTopCategory (id: string) {
+      const res = await request.get<ApiRes<TopCategory>>('/category', {
+        params: {
+          id
+        }
+      })
+      this.topCategory = res.data.result
+    },
+     // 获取二级商品分类的信息 get请求query查询参数传参
+     async getSubCategory(id: string) {
+      // await request.get<ApiRes<SubCategory>>(`/category/sub/filter`, { params: { id } })
+      const res = await request.get<ApiRes<SubCategory>>(`/category/sub/filter?id=${id}`)
+      this.subCategory = res.data.result
     }
   }
 

@@ -3,6 +3,18 @@
 // 2. 创建路由实例 配置路由规则
 import {createRouter, createWebHistory} from 'vue-router'
 const router  = createRouter({
+  scrollBehavior(to, from, savedPosition) {
+    // 始终滚动到顶部
+    return {
+      top: 0, // 回到顶部
+      behavior: 'smooth' // 平滑滚动 过渡效果
+    }
+    /*  if (savedPosition) {
+       return savedPosition // 回退页面 保留上一次浏览的位置
+     } else {
+       return { top: 0 } // 让滚动条从0开始
+     } */
+  },
   history: createWebHistory(), // history模式
   routes: [
     {path: '/', component: () => import('@/views/Layout/index.vue'), children: [
