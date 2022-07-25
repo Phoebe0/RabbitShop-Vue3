@@ -9,11 +9,6 @@ const router  = createRouter({
       top: 0, // 回到顶部
       behavior: 'smooth' // 平滑滚动 过渡效果
     }
-    /*  if (savedPosition) {
-       return savedPosition // 回退页面 保留上一次浏览的位置
-     } else {
-       return { top: 0 } // 让滚动条从0开始
-     } */
   },
   history: createWebHistory(), // history模式
   routes: [
@@ -21,6 +16,7 @@ const router  = createRouter({
       {path: '', component: () => import('@/views/Home/index.vue')}, // 首页
       {path: '/category/:id', component: () => import('@/views/category/index.vue')}, // 一级路由
       {path: '/category/sub/:id', component: () => import('@/views/category/sub.vue')}, // 二级路由
+      {path: '/goods/:id', component: () => import ('@/views/goods/index.vue')} // 商品详情页路由
     ]},
     {path: '/login', component: () => import('@/views/Login/index.vue')},
     {path: '/test', component: () => import('@/views/testdemo/index.vue')}

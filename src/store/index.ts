@@ -1,9 +1,11 @@
 import useCateStore from './modules/category'
-import useHomeStore from './home'
+import useHomeStore from './modules/home'
+import useGoodsStore from './modules/goods'
 const useStore = () => {
   return {
     category: useCateStore(),
-    home: useHomeStore()
+    home: useHomeStore(),
+    goods: useGoodsStore()
   }
 }
 export default useStore

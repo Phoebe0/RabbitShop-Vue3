@@ -39,12 +39,14 @@ const useCateStore = defineStore('category',{
           id
         }
       })
+      console.log('一级分类信息🍡', res.data.result)
+      
       this.topCategory = res.data.result
     },
      // 获取二级商品分类的信息 get请求query查询参数传参
      async getSubCategory(id: string) {
-      // await request.get<ApiRes<SubCategory>>(`/category/sub/filter`, { params: { id } })
       const res = await request.get<ApiRes<SubCategory>>(`/category/sub/filter?id=${id}`)
+      console.log('二级商品🧂', res.data.result)
       this.subCategory = res.data.result
     }
   }

@@ -2,17 +2,17 @@
 import useStore from '@/store'
 import { computed } from '@vue/reactivity'
 import { ref } from 'vue'
-  const { category } = useStore()
-  // 为左侧的li绑定鼠标进入事件，并记录索引
-  const activeId= ref('') // 是激活的id
-  const showList = computed(() => {
-    return category.cateList.find(item => item.id === activeId.value)?.goods
-  })
-  const handleEnter = (id: string) => {
-    // 解决数据未完成赋值导致所有人都高亮问题
-    if(!id) return 
-    activeId.value = id
-  }
+const { category } = useStore()
+// 为左侧的li绑定鼠标进入事件，并记录索引
+const activeId= ref('') // 是激活的id
+const showList = computed(() => {
+  return category.cateList.find(item => item.id === activeId.value)?.goods
+})
+const handleEnter = (id: string) => {
+  // 解决数据未完成赋值导致所有人都高亮问题
+  if(!id) return 
+  activeId.value = id
+}
 </script>
 <template>
   <div class="home-category" @mouseleave="activeId = ''">
@@ -23,10 +23,11 @@ import { ref } from 'vue'
       @mouseenter="handleEnter(item.id)"
       :class="{ active: item.id === activeId }"
       >
-        <RouterLink to="/">{{ item.name }}</RouterLink>
+        <!-- 大文本 -->
+        <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         <!-- 侧边栏小文本 -->
         <template v-if="item.children">
-          <RouterLink to="/" v-for="subItem in item.children?.slice(0,2)" :key="subItem.id">{{ subItem.name }}</RouterLink>
+          <RouterLink :to="`/category/sub/${subItem.id}`" v-for="subItem in item.children?.slice(0,2)" :key="subItem.id">{{ subItem.name }}</RouterLink>
         </template>
         <XtxSkeleton
         v-else
@@ -47,7 +48,7 @@ import { ref } from 'vue'
       <h4>分类推荐 <small>根据您的购买或浏览记录推荐🍷</small></h4>
       <ul>
         <li v-for="item in showList" :key="item.id">
-          <RouterLink to="/">
+          <RouterLink :to="`/goods/${item.id}`">
             <img :src="item.picture" alt="">
             <div class="info">
               <p class="name ellipsis-2">{{ item.name }}</p>

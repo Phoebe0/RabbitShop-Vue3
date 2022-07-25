@@ -38,10 +38,10 @@ watchEffect(() => {
         <h3>全部分类</h3>
         <ul>
           <li v-for="item in category.topCategory.children" :key="item.id">
-            <a href="javascript:;">
+            <RouterLink :to="`category/sub/${item.id}`">
               <img :src="item.picture">
               <p>{{ item.name }}</p>
-            </a>
+           </RouterLink>
           </li>
         </ul>
       </div>
@@ -57,7 +57,7 @@ watchEffect(() => {
           <GoodsItem :goods="subItem" v-for="subItem in item.goods" :key="subItem.id" />
         </div>
         <div class="body" v-else>
-          <h2 style="width: 100%; text-align: center;">暂无商品...等待更新上传</h2>
+          <h2 style="width: 100%; text-align: center;">正在努力补货惹···</h2>
         </div>
       </div>
     </div>

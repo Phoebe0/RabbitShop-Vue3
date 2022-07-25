@@ -1,8 +1,8 @@
 // 商品
 export type GoodItem = {
   desc: string
-  discount?: any
-  orderNum: number
+  discount: null | number
+  orderNum: null | number
   id: string
   name: string
   picture: string
@@ -128,5 +128,6 @@ export type SubCategory = {
     place: string
   }[]
   saleProperties: SaleProperty[]
-  goods: GoodsItem[]
+  goods: GoodItem[]
 }
+
