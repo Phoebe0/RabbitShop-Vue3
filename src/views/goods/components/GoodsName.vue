@@ -26,7 +26,8 @@ const changeAddress = (address: AddressType) => {
     </dl>
     <dl>
       <dt>配送</dt>
-      <dd>至 <XtxCity :address="userAddress" @changeAddress="changeAddress"></XtxCity> </dd>
+      <dd>至 <XtxCity :address="userAddress" @changeAddress="changeAddress"></XtxCity>
+      </dd>
     </dl>
     <dl>
       <dt>服务</dt>
@@ -44,22 +45,27 @@ const changeAddress = (address: AddressType) => {
 .g-name {
   font-size: 22px;
 }
+
 .g-desc {
   color: #999;
   margin-top: 10px;
 }
+
 .g-price {
   margin-top: 10px;
+
   span {
     &::before {
       content: '¥';
       font-size: 14px;
     }
+
     &:first-child {
       color: @priceColor;
       margin-right: 10px;
       font-size: 22px;
     }
+
     &:last-child {
       color: #999;
       text-decoration: line-through;
@@ -67,30 +73,37 @@ const changeAddress = (address: AddressType) => {
     }
   }
 }
+
 .g-service {
   background: #f5f5f5;
   width: 500px;
   padding: 20px 10px 0 10px;
   margin-top: 10px;
+
   dl {
     padding-bottom: 20px;
     display: flex;
     align-items: center;
+
     dt {
       width: 50px;
       color: #999;
     }
+
     dd {
       color: #666;
+
       &:last-child {
         span {
           margin-right: 10px;
+
           &::before {
             content: '•';
             color: @xtxColor;
             margin-right: 2px;
           }
         }
+
         a {
           color: @xtxColor;
         }
