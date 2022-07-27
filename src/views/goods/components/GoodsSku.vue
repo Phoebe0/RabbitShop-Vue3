@@ -3,20 +3,14 @@ import { GoodsInfo, Spec, Value } from '@/types/goods'
 import bwPowerSet from '@/utils/power-set'
 // 接收商品信息
 const props = defineProps<{
-  goods: GoodsInfo
+  goods: GoodsInfo,
+  skuId?: string
 }>()
-// 1. 点击选中功能
-const changeSeleted = (item: Spec, subItem: Value) => {
-  if (subItem.selected) {
-    // 表示已经选中了
-    subItem.selected = false
-  } else {
-    // 排他
-    // 把同级选中的的取消选中，只选中当前点击的subItem
-    item.values.forEach(v => v.selected = false)
-    subItem.selected = true
-  }
-}
+
+const emit = defineEmits<{
+  (e: 'selectdGoods', skuId: string): void
+}>()
+
 
 // 2. 求路径字典 ————> 按钮默认禁用和组合禁用
 const getMap = () => {
@@ -45,7 +39,97 @@ const getMap = () => {
   })
   return pathMap
 }
+const pathMap = getMap()
 console.log(getMap())
+
+// 4. 保证点击规格的数组顺序
+const orderArr = () => {
+  // 循环specs,拿到每一个被选中的按钮，并且有序地放在数组中
+  const arr = ['', '', '']
+  props.goods.specs.forEach((spec, index) => {
+    const btn = spec.values.find(btn => btn.selected)
+    if (btn) {
+      arr[index] = btn.name
+    } else {
+      arr[index] = ''
+    }
+  })
+  return arr
+}
+
+// 3. 默认按钮规格的禁用
+// 取到所有的规格按钮 去路径字典中查找，看是否有某个按钮不存在路径对象字典中。如果不存在就禁用
+const defaultDisabledSpec = () => {
+  // 只要点击，就会得到一个有序数组
+  const arr = orderArr() // ['', '', '10cm']
+  props.goods.specs.forEach((spec, index) => { // 每一行
+    spec.values.forEach(btn => { // 每一个按钮对象
+      const newArr = [...arr]
+      newArr[index] = btn.name
+      const key = newArr.filter(item => item).join('♥')
+      console.log(key)
+      if (pathMap[key]) {
+        btn.disabled = false
+      } else {
+        btn.disabled = true
+      }
+    })
+  })
+}
+// 页面一加载调用一次，禁用无货的
+defaultDisabledSpec()
+
+// 1. 点击选中功能
+const changeSeleted = (item: Spec, subItem: Value) => {
+  if(subItem.disabled) return  // 已经被禁用了，禁止点击 
+  if (subItem.selected) {
+    // 表示已经选中了
+    subItem.selected = false
+  } else {
+    // 排他
+    // 把同级选中的的取消选中，只选中当前点击的subItem
+    item.values.forEach(v => v.selected = false)
+    subItem.selected = true
+  }
+  // 点击的时候也要禁用
+  defaultDisabledSpec() 
+  // 选择完一个完整的规格后，记录skuId,传递给父组件
+  const selectArr = orderArr()
+  // 1. 过滤数组，看是否有空元素
+  const res = selectArr.filter(value => value)
+  console.log(res)
+  // 2. 如果过滤出来的数组长度等于props.goods.specs.length  把skuId记录下来
+  if (res.length === props.goods.specs.length) {
+    // 3. 将res处理成字符串去路径字典中查找
+    const key = res.join('♥')
+    const skuId = pathMap[key][0] // 找到了完整规格的skuId
+    emit('selectdGoods', skuId)
+  }
+
+  
+}
+
+// 5. 默认选中规格
+const defaultCheckdBtn = () => {
+  // 5.1 没传skuId, 不选中哦
+  if (!props.skuId) return 
+  // 5.2 基于传过来的skuId, 默认规格勾选
+  // 5.2.1 从goods.skus数组中查找那一项sku
+  const sku = props.goods.skus.find(sku => sku.id === props.skuId)
+  console.log(sku)
+  // 5.3 找到了这个sku, 这个sku中有specs(数组）记录了各个规格
+  if (sku) {
+    props.goods.specs.forEach((spec, index) => {
+      console.log(spec)
+      spec.values.forEach(btn => {
+        if(btn.name === sku.specs[index].valueName) {
+          btn.selected = true
+        }
+      })
+    })
+  } 
+}
+defaultCheckdBtn()
 
 </script>
 <template>
@@ -56,8 +140,8 @@ console.log(getMap())
         <!-- selected 表示选中 ；disabled 表示禁用  -->
         <template v-for="subItem in item.values" :key="subItem.name">
           <img v-if="subItem.picture" :src="subItem.picture" :title="subItem.name" @click="changeSeleted(item, subItem)"
-            :class="{ selected: subItem.selected }" />
-          <span v-else @click="changeSeleted(item, subItem)" :class="{ selected: subItem.selected }">
+            :class="{ selected: subItem.selected, disabled: subItem.disabled }" />
+          <span v-else @click="changeSeleted(item, subItem)" :class="{ selected: subItem.selected, disabled: subItem.disabled }">
             {{ subItem.name }}
           </span>
         </template>

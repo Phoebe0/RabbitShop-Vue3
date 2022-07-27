@@ -14,6 +14,17 @@ watchEffect(() => {
   }
 })
 
+const selectdGoods = (skuId: string) => {
+  // 父组件接受到skuId, 要根据这个Id更新商品信息
+  const sku = goods.goodsInfo.skus.find(sku => sku.id === skuId)
+  if(sku) {
+    // 这里直接修改仓库，不严谨，按理说应该提交一个仓库的action
+    goods.goodsInfo.inventory = sku.inventory
+    goods.goodsInfo.oldPrice = sku.oldPrice
+    goods.goodsInfo.price = sku.price
+  }
+}
+
 </script>
 
 
@@ -46,7 +57,7 @@ watchEffect(() => {
             <!-- 商品名称 + 商品描述 + 地区选择 -->
             <GoodsName :goods="goods.goodsInfo" />
             <!-- 商品sku -->
-            <GoodsSku :goods="goods.goodsInfo"></GoodsSku>
+            <GoodsSku :goods="goods.goodsInfo" skuId="1369155864430120962" @selectdGoods="selectdGoods"></GoodsSku>
           </div>
 
         </div>

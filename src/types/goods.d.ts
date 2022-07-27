@@ -37,6 +37,7 @@ export type Value = {
   name: string // 每一个规格名字
   picture: string | null  // 每一个规格图片。有图片优先渲染图片，其次考虑文本
   selected: boolean // （自己新增的字段） 商品是否选中
+  disabled: boolean // 
 }
 // Sku类型注解
 export type SkuType = {
