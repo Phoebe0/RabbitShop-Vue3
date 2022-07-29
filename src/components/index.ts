@@ -6,6 +6,8 @@ import Xtxmore from '@/components/more/index.vue'
 import XtxBread from './bread/index.vue'
 import XtxBreadItem from './bread/item.vue'
 import XtxCity from './city/index.vue'
+import XtxNumbox from './numbox/index.vue'
+import XtxButton from './button/index.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
 import { App } from 'vue'
@@ -20,6 +22,8 @@ export default {
     app.component(XtxBread.name, XtxBread)
     app.component(XtxBreadItem.name, XtxBreadItem)
     app.component(XtxCity.name, XtxCity)
+    app.component(XtxNumbox.name, XtxNumbox)
+    app.component(XtxButton.name, XtxButton)
     app.directive('lazy', {
       mounted(el, binding) {
         // binding.value  图片的地址

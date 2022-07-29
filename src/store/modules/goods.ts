@@ -20,6 +20,10 @@ export default defineStore('goods', {
         }
       })
       this.goodsInfo = res.data.result
+    },
+    // 定义一个重置goodsInfo的方法
+    resetGoodsInfo () {
+      this.goodsInfo = {} as GoodsInfo
     }
   },
   getters: {}

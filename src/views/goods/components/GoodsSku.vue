@@ -105,8 +105,6 @@ const changeSeleted = (item: Spec, subItem: Value) => {
     const skuId = pathMap[key][0] // 找到了完整规格的skuId
     emit('selectdGoods', skuId)
   }
-
-  
 }
 
 // 5. 默认选中规格
