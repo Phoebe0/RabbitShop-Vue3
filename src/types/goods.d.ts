@@ -24,7 +24,14 @@ export type GoodsInfo = {
     name: string
   }[]
   specs: Spec[] // 商品的规格集合，数组中有几个对象，表示有几个规格
-  skus: SkuType[]
+  skus: SkuType[] 
+  details: {
+    pictures: string[]
+    properties: {
+      name:string
+      value:string
+    }[]
+  }
 }
 
 export type Spec = {

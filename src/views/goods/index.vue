@@ -6,6 +6,8 @@ import GoodsImage from './components/GoodsImage.vue'
 import GoodsSales from './components/GoodsSales.vue'
 import GoodsName from './components/GoodsName.vue'
 import GoodsSku from './components/GoodsSku.vue'
+import GoodsDetail from './components/GoodsDetail.vue'
+import GoodsHot from './components/GoodsHot.vue'
 const { goods } = useStore()
 const route = useRoute()
 watchEffect(() => {
@@ -69,16 +71,23 @@ const num = ref(4)
             <XtxButton type="primary" size="middle" style="margin-top: 20px">加入购物车</XtxButton>
 
           </div>
-
         </div>
         <!-- 商品详情 -->
         <div class="goods-footer">
           <div class="goods-article">
             <!-- 商品+评价 -->
-            <div class="goods-tabs"></div>
+            <div class="goods-tabs">
+              <div class="goods-tabs">
+                <GoodsDetail :goods="goods.goodsInfo"></GoodsDetail>
+              </div>
+            </div>
           </div>
           <!-- 24热榜+专题推荐 -->
-          <div class="goods-aside"></div>
+          <div class="goods-aside">
+            <GoodsHot :type="1"></GoodsHot>
+            <GoodsHot :type="2"></GoodsHot>
+            <GoodsHot :type="3"></GoodsHot>
+          </div>
         </div>
       </div>
 
@@ -94,7 +103,6 @@ const num = ref(4)
         <div class="goods-footer">
           <div class="goods-article">
             <!-- 商品+评价 -->
-            <div class="goods-tabs"></div>
           </div>
           <!-- 24热榜+专题推荐 -->
           <div class="goods-aside"></div>
@@ -119,6 +127,21 @@ const num = ref(4)
   .spec {
     flex: 1;
     padding: 30px 30px 30px 0;
+  }
+}
+
+.goods-footer {
+  display: flex;
+  margin-top: 20px;
+
+  .goods-article {
+    width: 940px;
+    margin-right: 20px;
+  }
+
+  .goods-aside {
+    width: 280px;
+    min-height: 1000px;
   }
 }
 </style>
