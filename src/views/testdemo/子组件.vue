@@ -1,13 +1,16 @@
 <script lang="ts" setup>
-defineProps<{
+defineProps({
   modelValue: {
     type: Number,
     default: 0
   }
-}>()
+})
 const emit = defineEmits<{
   (e: 'update:modelValue', val: number): void
 }>()
+const changeMoney = () => {
+  emit('update:modelValue', 20)
+}
 
 </script>
 <template>

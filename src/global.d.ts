@@ -10,6 +10,7 @@ import XtxCity from '@/components/city/index.vue'
 import XtxNumbox from '@/components/numbox/index.vue'
 import XtxButton from '@/components/button/index.vue'
 import XtxCheckbox from '@/components/checkbox/index.vue'
+import XtxMessage from '@/components/message/index.vue'
 // 参考：https://stackoverflow.com/questions/69010567
 declare module 'vue' {
   export interface GlobalComponents {
@@ -22,6 +23,7 @@ declare module 'vue' {
     XtxNumbox: typeof XtxNumbox
     XtxButton: typeof XtxButton
     XtxCheckbox: typeof XtxCheckbox
+    XtxMessage: typeof XtxMessage
   }
 }
 export {}
