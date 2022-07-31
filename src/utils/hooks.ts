@@ -1,7 +1,8 @@
+// 封装一些通用的方法
+
 // 自定义一些通用的compositions api
-import { useIntersectionObserver } from '@vueuse/core'
+import { useIntersectionObserver, useIntervalFn } from '@vueuse/core'
 import { ref } from 'vue'
-import { threadId } from 'worker_threads'
 
 // 封装通用的数据懒加载api
 export function useLazyData(apiFn: () => void) {
@@ -26,3 +27,22 @@ export function useLazyData(apiFn: () => void) {
   )
   return target // 就是空的ref对象，要和组件中的dom进行绑定
 } 
+
+// 封装倒计时方法
+export function useCountDown(num: number ) {
+  const time = ref(0)
+  const {pause, resume} = useIntervalFn(() => {
+    time.value --
+    if (time.value <= 0) pause()
+
+  }, 1000, {immediate: false})
+  // 开始，赋值起始值并开始运行倒计时
+  const start = () => {
+    time.value = num
+    resume()
+  }
+  return {
+    time, 
+    start
+  }
+}

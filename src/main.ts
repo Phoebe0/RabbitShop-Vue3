@@ -5,6 +5,8 @@ import '@/assets/styles/common.less'
 import router from './router/index'
 import { createPinia } from 'pinia'
 import XtxUI from '@/components/index'
+
+
 createApp(App)
 .use(router)
 .use(createPinia())

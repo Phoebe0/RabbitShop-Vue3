@@ -1,11 +1,12 @@
 // axios请求工具库封装的模块
-import axios from 'axios'
+import Message from '@/components/message/index'
+import axios, { AxiosError } from 'axios'
 
 const instance = axios.create({
   // baseURL: 'http://pcapi-xiaotuxian-front.itheima.net/',
   // 备用接口地址
-  // baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net/',   
-  baseURL: 'https://apipc-xiaotuxian-front.itheima.net/',
+  baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net/',   
+  // baseURL: 'https://apipc-xiaotuxian-front.itheima.net/',
   timeout: 5000
 })
 
@@ -26,8 +27,15 @@ instance.interceptors.response.use(
   function (response) {
     return response
   },
-  function (error) {
+  function (error: AxiosError<{code: string, message: string}>) {
     // 对响应错误做点什么
+    console.dir(error)
+    
+    if(error.response) {
+      Message.error(error.response.data.message)
+    } else {
+      Message.error('服务器异常，请稍后重试')
+    }
     return Promise.reject(error)
   }
 )

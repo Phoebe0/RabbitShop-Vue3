@@ -408,7 +408,12 @@
   "resolved" "https://registry.npmmirror.com/pify/-/pify-4.0.1.tgz"
   "version" "4.0.1"
 
-"pinia@^2.0.16":
+"pinia-plugin-persistedstate@^2.0.0":
+  "integrity" "sha512-/SEHkFIY3XPnTkSwVomWIkAK+SyBh+mVTlHHO/oL7X7QGBSCxM1BqtGqwEjaLKEu5pcf/XCiuWSJJZKgxxwXyA=="
+  "resolved" "https://registry.npmmirror.com/pinia-plugin-persistedstate/-/pinia-plugin-persistedstate-2.0.0.tgz"
+  "version" "2.0.0"
+
+"pinia@^2.0.0", "pinia@^2.0.16":
   "integrity" "sha512-9/LMVO+/epny1NBfC77vnps4g3JRezxhhoF1xLUk8mZkUIxVnwfEAIRiAX8mYBTD/KCwZqnDMqXc8w3eU0FQGg=="
   "resolved" "https://registry.npmmirror.com/pinia/-/pinia-2.0.16.tgz"
   "version" "2.0.16"
@@ -491,6 +496,13 @@
   "resolved" "https://registry.npmmirror.com/typescript/-/typescript-4.7.4.tgz"
   "version" "4.7.4"
 
+"vee-validate@^4.6.2":
+  "integrity" "sha512-DOOQn3lLgDQXuLogEaiv0WfaW7lNydODdmtB/RjkodioaJ1hjlwoM0zdsIGzMW/t35p04GdZfWM4UCd0gfTiLg=="
+  "resolved" "https://registry.npmmirror.com/vee-validate/-/vee-validate-4.6.2.tgz"
+  "version" "4.6.2"
+  dependencies:
+    "@vue/devtools-api" "^6.1.4"
+
 "vite-plugin-vue-setup-extend@^0.4.0":
   "integrity" "sha512-WMbjPCui75fboFoUTHhdbXzu4Y/bJMv5N9QT9a7do3wNMNHHqrk+Tn2jrSJU0LS5fGl/EG+FEDBYVUeWIkDqXQ=="
   "resolved" "https://registry.npmmirror.com/vite-plugin-vue-setup-extend/-/vite-plugin-vue-setup-extend-0.4.0.tgz"
@@ -530,7 +542,7 @@
   dependencies:
     "@volar/vue-typescript" "0.38.8"
 
-"vue@^2.6.0 || ^3.2.0", "vue@^2.6.14 || ^3.2.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.37", "vue@3.2.37":
+"vue@^2.6.0 || ^3.2.0", "vue@^2.6.14 || ^3.2.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.37", "vue@3.2.37":
   "integrity" "sha512-bOKEZxrm8Eh+fveCqS1/NkG/n6aMidsI6hahas7pa0w/l7jkbssJVsRhVDs07IdDq7h9KHswZOgItnwJAgtVtQ=="
   "resolved" "https://registry.npmmirror.com/vue/-/vue-3.2.37.tgz"
   "version" "3.2.37"
