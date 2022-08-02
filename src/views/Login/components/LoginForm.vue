@@ -5,6 +5,7 @@ import Message from '@/components/message/index'
 import { useRouter } from 'vue-router'
 import { useForm, useField } from 'vee-validate'
 import { useCountDown } from '@/utils/hooks'
+import { accountRule, passwordRule, isAgreeRule, mobileRule, codeRule } from '@/utils/validate'
 
 
 const { user } = useStore()
@@ -20,35 +21,11 @@ const { validate, resetForm } = useForm({
   //   code: '123456'
   // },
   validationSchema: {
-    account(value: string) {
-      // account 是字段名，参数value是校验的值
-      // 当前函数中，如果return true表示校验通过，其他return结果就是错误
-      if (!value?.trim().length) return '请输入账号'
-      // 账号合法性 字母开头 5~15位
-      if (!/^[a-zA-Z]\w{4,14}$/.test(value)) return '账号必须字母开头，包含字母，数字，5-15位'
-      return true
-    },
-    password(value: string) {
-      if (!value?.trim().length) return '请输入密码'
-      // 密码 6-20位
-      if (!/^\w{6,20}$/.test(value)) return '密码必须6-20位'
-      return true
-    },
-    isAgree(value: boolean) {
-      // 父组件接受到子组件发过来的是否同意该协议的状态，然后根据该状态发送登录请求
-      if (!value) return '请同意该协议'
-      return true
-    },
-    mobile(value: string) {
-      if (!value?.trim().length) return '请输入手机号'
-      if (!/^1[3-9]\d{9}$/.test(value)) return '请输入11位手机号'
-      return true
-    },
-    code(value: string) {
-      if (!value?.trim().length) return '请输入验证码'
-      if (!/^\d{6}$/.test(value)) return '验证码格式错误'
-      return true
-    }
+    account: accountRule,
+    password: passwordRule,
+    isAgree: isAgreeRule,
+    mobile: mobileRule,
+    code: codeRule
   }
 })
 const { value: account, errorMessage: accountMessage } = useField<string>('account')
@@ -182,7 +159,11 @@ const sendCode = async () => {
     </div>
     <!-- 第三方登录 -->
     <div class="action">
-      <img src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="" />
+      <a
+        href="https://graph.qq.com/oauth2.0/authorize?client_id=100556005&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fwww.corho.com%3A8080%2F%23%2Flogin%2Fcallback">
+        <img width="20"
+          src="https://img1.baidu.com/it/u=2351789609,2312769628&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=592" alt="">
+      </a>
       <div class="url">
         <a href="javascript:;">忘记密码</a>
         <a href="javascript:;">免费注册</a>

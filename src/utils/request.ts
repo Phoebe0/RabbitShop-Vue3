@@ -3,9 +3,9 @@ import Message from '@/components/message/index'
 import axios, { AxiosError } from 'axios'
 
 const instance = axios.create({
-  // baseURL: 'http://pcapi-xiaotuxian-front.itheima.net/',
+  baseURL: 'http://pcapi-xiaotuxian-front.itheima.net/',
   // 备用接口地址
-  baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net/',   
+  // baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net/',   
   // baseURL: 'https://apipc-xiaotuxian-front.itheima.net/',
   timeout: 5000
 })
@@ -32,7 +32,11 @@ instance.interceptors.response.use(
     console.dir(error)
     
     if(error.response) {
-      Message.error(error.response.data.message)
+      if (error.response.data.code === '501' && error.response.data.message === '三方登录失败') {
+        Message.warning('第三方登录成功，请绑定个人信息')
+      } else {
+        Message.error(error.response.data.message)
+      }
     } else {
       Message.error('服务器异常，请稍后重试')
     }
