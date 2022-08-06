@@ -81,7 +81,7 @@ defaultDisabledSpec()
 
 // 1. 点击选中功能
 const changeSeleted = (item: Spec, subItem: Value) => {
-  if(subItem.disabled) return  // 已经被禁用了，禁止点击 
+  if (subItem.disabled) return  // 已经被禁用了，禁止点击 
   if (subItem.selected) {
     // 表示已经选中了
     subItem.selected = false
@@ -92,7 +92,7 @@ const changeSeleted = (item: Spec, subItem: Value) => {
     subItem.selected = true
   }
   // 点击的时候也要禁用
-  defaultDisabledSpec() 
+  defaultDisabledSpec()
   // 选择完一个完整的规格后，记录skuId,传递给父组件
   const selectArr = orderArr()
   // 1. 过滤数组，看是否有空元素
@@ -104,13 +104,16 @@ const changeSeleted = (item: Spec, subItem: Value) => {
     const key = res.join('♥')
     const skuId = pathMap[key][0] // 找到了完整规格的skuId
     emit('selectdGoods', skuId)
+  } else {
+    // 没有选择完规格，也有要做子传父，传递空字符串给父组件
+    emit('selectdGoods', '')
   }
 }
 
 // 5. 默认选中规格
 const defaultCheckdBtn = () => {
   // 5.1 没传skuId, 不选中哦
-  if (!props.skuId) return 
+  if (!props.skuId) return
   // 5.2 基于传过来的skuId, 默认规格勾选
   // 5.2.1 从goods.skus数组中查找那一项sku
   const sku = props.goods.skus.find(sku => sku.id === props.skuId)
@@ -120,12 +123,12 @@ const defaultCheckdBtn = () => {
     props.goods.specs.forEach((spec, index) => {
       console.log(spec)
       spec.values.forEach(btn => {
-        if(btn.name === sku.specs[index].valueName) {
+        if (btn.name === sku.specs[index].valueName) {
           btn.selected = true
         }
       })
     })
-  } 
+  }
 }
 defaultCheckdBtn()
 
@@ -139,7 +142,8 @@ defaultCheckdBtn()
         <template v-for="subItem in item.values" :key="subItem.name">
           <img v-if="subItem.picture" :src="subItem.picture" :title="subItem.name" @click="changeSeleted(item, subItem)"
             :class="{ selected: subItem.selected, disabled: subItem.disabled }" />
-          <span v-else @click="changeSeleted(item, subItem)" :class="{ selected: subItem.selected, disabled: subItem.disabled }">
+          <span v-else @click="changeSeleted(item, subItem)"
+            :class="{ selected: subItem.selected, disabled: subItem.disabled }">
             {{ subItem.name }}
           </span>
         </template>

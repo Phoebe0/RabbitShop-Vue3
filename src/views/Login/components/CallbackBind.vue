@@ -30,6 +30,7 @@ const { validate } = useForm({
     code: codeRule
   }
 })
+
 const { value: mobile, errorMessage: mobileMessage, validate: validateMobile } = useField<string>('mobile')
 const { value: code, errorMessage: codeMessage } = useField<string>('code')
 

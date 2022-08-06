@@ -1,7 +1,7 @@
 // 创建路由实例  路由规则 并导出并在main.ts中  app.vue中准备路由出口
 // 1. 安装路由 yarn add vue-router
 // 2. 创建路由实例 配置路由规则
-import {createRouter, createWebHistory, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 const router  = createRouter({
   scrollBehavior(to, from, savedPosition) {
     // 始终滚动到顶部

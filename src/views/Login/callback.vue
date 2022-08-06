@@ -29,7 +29,7 @@ const activeName = ref<'bind' | 'edit'>('bind')
 
 const openID = ref('')
 
-// 1. 获取是否QQ三方登陆成功
+// 情况1. 获取是否QQ三方登陆成功
 if (QC.Login.check()) {
   // 2. 获取openId
   QC.Login.getMe(async (openId: string) => {

@@ -8,6 +8,7 @@ import GoodsName from './components/GoodsName.vue'
 import GoodsSku from './components/GoodsSku.vue'
 import GoodsDetail from './components/GoodsDetail.vue'
 import GoodsHot from './components/GoodsHot.vue'
+import Message from '@/components/message'
 const { goods } = useStore()
 const route = useRoute()
 watchEffect(() => {
@@ -19,7 +20,9 @@ watchEffect(() => {
   }
 })
 
+let selectdId = ''
 const selectdGoods = (skuId: string) => {
+  selectdId = skuId
   // 父组件接受到skuId, 要根据这个Id更新商品信息
   const sku = goods.goodsInfo.skus.find(sku => sku.id === skuId)
   if (sku) {
@@ -30,8 +33,15 @@ const selectdGoods = (skuId: string) => {
   }
 }
 
+const addCar = () => {
+  if (!selectdId) return Message.warning('请选择完整规格')
+  // 选择了完整规格，才能加入购物车
+  console.log('加入购物车🍄', selectdId)
+
+}
+
 // 输入计数框的值
-const num = ref(4)
+const num = ref(1)
 </script>
 
 
@@ -68,7 +78,7 @@ const num = ref(4)
             <!-- 计数器组件 -->
             <XtxNumbox v-model="num" :min="1" :max="10" label="数量"> </XtxNumbox>
             <!-- 加入购物车按钮 -->
-            <XtxButton type="primary" size="middle" style="margin-top: 20px">加入购物车</XtxButton>
+            <XtxButton type="primary" size="middle" style="margin-top: 20px" @click="addCar">加入购物车</XtxButton>
 
           </div>
         </div>
